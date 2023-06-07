@@ -3,6 +3,7 @@ package com.example.habittest;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.Date;
 
@@ -20,7 +21,6 @@ public class DBManager {
     public DBManager(SQLiteDatabase db) {
         this.db = db;
     }
-
 
     //数据库创建函数
     public void createTableOrNot() {
@@ -44,18 +44,48 @@ public class DBManager {
         }
         //调试用Log.i("tag",Integer.toString(count));
         //调试用Log.i("tag",Boolean.toString(notable));
+        notable = true;
+        count = -1;
+        //创建心愿单表格
+        sql = "select count(*) as c from sqlite_master where type ='table' and name ='wishes' ";
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToNext()) {
+            count = cursor.getInt(0);
+            if (count > 0) {
+                notable = false;
+            }
+        }
+        if (notable) {//不存在则创建
+            String sql1 = "create table wishes (wname text primary key,pic text, is_finish integer,time text, wtext text,spoint integer)";
+
+            db.execSQL(sql1);
+            this.insertTestWishRecord();
+
+        }
+
     }
+    public void insertTestWishRecord()
+    {
+        String sql9 = "insert into wishes values ('测试心愿1','wish',0,'20230604','七月前完成10公里打卡',25)";
+        String sql10 = "insert into wishes values ('测试心愿2','wish_finish',1,'20230604','完成专业综合测试项目',25)";
 
+        db.execSQL(sql9);
+        db.execSQL(sql10);
+    }
     public void insertTestRecord() {
-        String sql1 = "insert into habits values ('测试习惯1','habit_1',2,0,'晨间习惯','每天','只有千锤百炼，才能成为好钢。',5,0,3,'20190526',1)";
-        String sql2 = "insert into habits values ('测试习惯2','habit_2',3,0,'午间习惯','每天','只有千锤百炼，才能成为好钢。',3,0,2,'20190515',1)";
-        String sql3 = "insert into habits values ('测试习惯3','habit_3',1,0,'晚间习惯','每天','只有千锤百炼，才能成为好钢。',4,0,2,'20190522',1)";
-        String sql4 = "insert into habits values ('测试习惯4','habit_4',1,0,'任意时间','每天','只有千锤百炼，才能成为好钢。',6,0,3,'20190531',1)";
 
-        String sql5 = "insert into daka values ('测试习惯1','20190601'),('测试习惯1','20190602'),('测试习惯1','20190603'),('测试习惯1','20190610'),('测试习惯1','20190611')";
-        String sql6 = "insert into daka values ('测试习惯2','20190603'),('测试习惯2','20190610'),('测试习惯2','20190611')";
-        String sql7 = "insert into daka values ('测试习惯3','20190603'),('测试习惯3','20190604'),('测试习惯3','20190610'),('测试习惯3','20190611')";
-        String sql8 = "insert into daka values ('测试习惯4','20190601'),('测试习惯4','20190602'),('测试习惯4','20190603'),('测试习惯4','20190609'),('测试习惯4','20190610'),('测试习惯4','20190611')";
+
+        String sql1 = "insert into habits values ('测试习惯1','habit_1',2,0,'晨间习惯','每天','只有千锤百炼，才能成为好钢。',5,0,3,'20230604',1)";
+        String sql2 = "insert into habits values ('测试习惯2','habit_2',3,0,'午间习惯','每天','只有千锤百炼，才能成为好钢。',3,0,2,'20230604',1)";
+        String sql3 = "insert into habits values ('测试习惯3','habit_3',1,0,'晚间习惯','每天','只有千锤百炼，才能成为好钢。',4,0,2,'20230604',1)";
+        String sql4 = "insert into habits values ('测试习惯4','habit_4',1,0,'任意时间','每天','只有千锤百炼，才能成为好钢。',6,0,3,'20230604',1)";
+
+        String sql5 = "insert into daka values ('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604')";
+        String sql6 = "insert into daka values ('测试习惯2','20230604'),('测试习惯2','20230604'),('测试习惯2','20230604')";
+        String sql7 = "insert into daka values ('测试习惯3','20230604'),('测试习惯3','20230604'),('测试习惯3','20230604'),('测试习惯3','20230604')";
+        String sql8 = "insert into daka values ('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604')";
+
+
 
         db.execSQL(sql1);
         db.execSQL(sql2);
@@ -65,6 +95,7 @@ public class DBManager {
         db.execSQL(sql6);
         db.execSQL(sql7);
         db.execSQL(sql8);
+
     }
 
     public void clockinUpdateDB(String h) {
@@ -84,6 +115,30 @@ public class DBManager {
         String sql2 = "insert into daka values ('" + h + "','" + date_s + "')";
         db.execSQL(sql1);
         db.execSQL(sql2);
+    }
+
+    public Wish[] getWish()
+    {
+        Log.e("DB","IntoGetWish");
+        String sql = "select count(*) from wishes";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        int count = cursor.getInt(0);//获取心愿总数'
+
+        Log.i("tag",Integer.toString(count));
+
+        Wish[] w = new Wish[count];
+        String sq2 = "select * from wishes";
+        Cursor c = db.rawQuery(sq2, null);
+        c.moveToFirst();
+        int i = 0;
+        while (!c.isAfterLast()) {
+            Wish w1 = new Wish(c.getString(0), c.getString(1), c.getInt(2), c.getString(3), c.getString(4), c.getInt(5));
+            w[i++] = w1;
+            c.moveToNext();
+        }
+        ///应当有count == h.length;
+        return w;
     }
 
     //返回给定时间段下的习惯

@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_wish:
                     Fragment4 frag4 = new Fragment4();
-
+                    frag4.setDBManager(mgr);
                     transaction.replace(R.id.content, frag4);
                     top_text.setText(R.string.top_wish);
                     top_button.setVisibility(View.GONE);
