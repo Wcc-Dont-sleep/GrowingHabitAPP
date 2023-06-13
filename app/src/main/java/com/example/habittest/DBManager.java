@@ -24,6 +24,21 @@ public class DBManager {
 
     //数据库创建函数
     public void createTableOrNot() {
+
+        String sql10 = "update wishes set is_finish=0 where wname='测试心愿1'";
+        String sql11 = "update wishes set pic='wish' where wname='测试心愿1'";
+        String sql12 = "update wishes set time='' where wname='测试心愿1'";
+
+        String sql13 = "update wishes set is_finish=0 where wname='测试心愿2'";
+        String sql14 = "update wishes set pic='wish' where wname='测试心愿2'";
+        String sql15 = "update wishes set time='' where wname='测试心愿2'";
+        //db.execSQL(sql10);
+        //db.execSQL(sql11);
+        //db.execSQL(sql12);
+        //db.execSQL(sql13);
+        //db.execSQL(sql14);
+        //db.execSQL(sql15);
+
         boolean notable = true;
         int count = -1;
         //先判断表是否存在
@@ -68,9 +83,15 @@ public class DBManager {
     {
         String sql9 = "insert into wishes values ('测试心愿1','wish',0,'20230604','七月前完成10公里打卡',25)";
         String sql10 = "insert into wishes values ('测试心愿2','wish_finish',1,'20230604','完成专业综合测试项目',25)";
-
+        String sql1 = "insert into wishes values ('测试心愿3','wish',0,'20230604','早睡早起10天',40)";
+        String sql2 = "insert into wishes values ('测试心愿4','wish',0,'20230604','背完六级单词',35)";
+        String sql3 = "insert into wishes values ('测试心愿5','wish',0,'20230604','完成租房',10)";
         db.execSQL(sql9);
         db.execSQL(sql10);
+        db.execSQL(sql1);
+        db.execSQL(sql2);
+        db.execSQL(sql3);
+
     }
     public void insertTestRecord() {
 
@@ -116,11 +137,22 @@ public class DBManager {
         db.execSQL(sql1);
         db.execSQL(sql2);
     }
-
-    public Wish[] getWish()
+    public void wishUpdateDB(String w)
+    {
+        String sql = "update wishes set is_finish=1 where wname='"+w+"'";
+        String sql2 = "update wishes set pic='wish_finish' where wname='"+w+"'";
+        db.execSQL(sql);
+        Date date = new Date();     ///获取当前日期
+        String date_s = Utils.date2String(date);
+        String sql1 = "update wishes set time='"+date_s+"' where wname='"+w+"'";
+        db.execSQL(sql1);
+        db.execSQL(sql2);
+    }
+    //is_finish=0表示未完成，为1为完成
+    public Wish[] getWish(int is_finish)
     {
         Log.e("DB","IntoGetWish");
-        String sql = "select count(*) from wishes";
+        String sql = "select count(*) from wishes where is_finish="+is_finish;
         Cursor cursor = db.rawQuery(sql, null);
         cursor.moveToNext();
         int count = cursor.getInt(0);//获取心愿总数'
@@ -128,7 +160,7 @@ public class DBManager {
         Log.i("tag",Integer.toString(count));
 
         Wish[] w = new Wish[count];
-        String sq2 = "select * from wishes";
+        String sq2 = "select * from wishes where is_finish="+is_finish;
         Cursor c = db.rawQuery(sq2, null);
         c.moveToFirst();
         int i = 0;
