@@ -87,10 +87,10 @@ public class MainActivity extends AppCompatActivity {
                     transaction.commit();
                     return true;
                 case R.id.navigation_notifications:
-                    Fragment3 frag3 = new Fragment3();
-                    frag3.setImage(image);
-                    transaction.replace(R.id.content, frag3);
-                    top_text.setText(R.string.top_mine);
+                    Fragment5 frag5 = new Fragment5();
+                    frag5.setDBManager(mgr);
+                    transaction.replace(R.id.content, frag5);
+                    top_text.setText("我的");
                     top_button.setVisibility(View.GONE);
                     transaction.commit();
                     return true;

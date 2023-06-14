@@ -32,12 +32,12 @@ public class DBManager {
         String sql13 = "update wishes set is_finish=0 where wname='测试心愿2'";
         String sql14 = "update wishes set pic='wish' where wname='测试心愿2'";
         String sql15 = "update wishes set time='' where wname='测试心愿2'";
-        //db.execSQL(sql10);
-        //db.execSQL(sql11);
-        //db.execSQL(sql12);
-        //db.execSQL(sql13);
-        //db.execSQL(sql14);
-        //db.execSQL(sql15);
+        db.execSQL(sql10);
+        db.execSQL(sql11);
+        db.execSQL(sql12);
+        db.execSQL(sql13);
+        db.execSQL(sql14);
+        db.execSQL(sql15);
 
         boolean notable = true;
         int count = -1;
@@ -118,7 +118,6 @@ public class DBManager {
         db.execSQL(sql8);
 
     }
-
     public void clockinUpdateDB(String h) {
         //点击签到键更新数据库
 
@@ -147,6 +146,22 @@ public class DBManager {
         String sql1 = "update wishes set time='"+date_s+"' where wname='"+w+"'";
         db.execSQL(sql1);
         db.execSQL(sql2);
+    }
+    public int countotalwish(){
+        Log.e("DB","IntoGetWish");
+        String sql = "select count(*) from wishes where is_finish="+1;
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        int count = cursor.getInt(0);//获取心愿总数'
+        return count;
+    }
+
+    public int countotalhabit(){
+        String sql = "select sum(finished_num) from habits";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        int count = cursor.getInt(0);//获取以完成的计划总数'
+        return count;
     }
     //is_finish=0表示未完成，为1为完成
     public Wish[] getWish(int is_finish)
