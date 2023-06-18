@@ -17,6 +17,10 @@
         android:icon="@drawable/ic_share"
         android:title="@string/top_wish" />
     <item
+        android:id="@+id/navigation_note"
+        android:icon="@drawable/note"
+        android:title="@string/top_note"/>
+    <item
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/ic_more_normal"
         android:title="@string/top_mine" />
