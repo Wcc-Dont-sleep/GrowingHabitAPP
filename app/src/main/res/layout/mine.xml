@@ -26,7 +26,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_about_us" />
+            app:srcCompat="@drawable/ic_all_select" />
 
         <TextView
             android:id="@+id/text4"
@@ -35,7 +35,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
-            android:text="关于我们"
+            android:text="心愿单"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +107,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="18dp"
             android:layout_marginEnd="8dp"
-            android:text="今日卡片"
+            android:text="便签"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
