@@ -158,7 +158,7 @@ public class Fragment4 extends Fragment{
             holder.button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    holder.button.setVisibility(View.GONE);
+
                     wish = mgr.getWish(0);
                     int l = wish.length;
                     if(position>=wish.length)
@@ -166,14 +166,20 @@ public class Fragment4 extends Fragment{
                         wish = mgr.getWish(1);
                         Toast.makeText(context,wish[position-l].wname + "已经完成，请勿重复点击", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        wish[position].is_finish=1;
-                        wish[position].pic="wish_finish";
-                        mgr.wishUpdateDB(wish[position].wname);
-                        Toast.makeText(context,wish[position].wname +"心愿完成"+"获得"+wish[position].spoint+"点数", Toast.LENGTH_SHORT).show();
-                        refresh_grid();
-
+                    else {
+                        wish[position].is_finish = 1;
+                        wish[position].pic = "wish_finish";
+                        if (mgr.wishUpdateDB(wish[position].wname))
+                        {
+                            mgr.UpdateUser();
+                            Toast.makeText(context,wish[position].wname +"心愿完成"+"消耗"+wish[position].spoint+"点数", Toast.LENGTH_SHORT).show();
+                            refresh_grid();
+                            //holder.button.setVisibility(View.GONE);
+                        }
+                        else
+                        {
+                            Toast.makeText(context,"当前点数不足兑换"+wish[position].wname +"心愿", Toast.LENGTH_SHORT).show();
+                        }
                     }
                     //Toast.makeText(context, "Wish Button Clicked: position " + buttonPosition, Toast.LENGTH_SHORT).show();
                 }

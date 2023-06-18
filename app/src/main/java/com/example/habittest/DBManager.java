@@ -25,6 +25,10 @@ public class DBManager {
     //数据库创建函数
     public void createTableOrNot() {
 
+        String dsql = "drop table daka";
+        String dsql2 = "drop table habits";
+        String dsql3 = "drop table user";
+
         String sql10 = "update wishes set is_finish=0 where wname='测试心愿1'";
         String sql11 = "update wishes set pic='wish' where wname='测试心愿1'";
         String sql12 = "update wishes set time='' where wname='测试心愿1'";
@@ -32,6 +36,11 @@ public class DBManager {
         String sql13 = "update wishes set is_finish=0 where wname='测试心愿2'";
         String sql14 = "update wishes set pic='wish' where wname='测试心愿2'";
         String sql15 = "update wishes set time='' where wname='测试心愿2'";
+
+        //db.execSQL(dsql);
+        //db.execSQL(dsql2);
+        //db.execSQL(dsql3);
+
         db.execSQL(sql10);
         db.execSQL(sql11);
         db.execSQL(sql12);
@@ -51,7 +60,7 @@ public class DBManager {
             }
         }
         if (notable) {//不存在则创建
-            String sql1 = "create table habits (hname text primary key,pic text, total_num integer,finished_num integer,time text, fre text, htext text,days integer, curdays integer, highdays integer, credate text , swit integer)";
+            String sql1 = "create table habits (hname text primary key,pic text, total_num integer,finished_num integer,time text, fre text, htext text,days integer, curdays integer, highdays integer, credate text , swit integer,spoint integer)";
             String sql2 = "create table daka (hname text,dakadate date)";
             db.execSQL(sql1);
             db.execSQL(sql2);
@@ -59,9 +68,10 @@ public class DBManager {
         }
         //调试用Log.i("tag",Integer.toString(count));
         //调试用Log.i("tag",Boolean.toString(notable));
+
+        //创建心愿单表格
         notable = true;
         count = -1;
-        //创建心愿单表格
         sql = "select count(*) as c from sqlite_master where type ='table' and name ='wishes' ";
         cursor = db.rawQuery(sql, null);
         if (cursor.moveToNext()) {
@@ -78,7 +88,59 @@ public class DBManager {
 
         }
 
+        //创建用户信息
+        notable = true;
+        count = -1;
+        sql = "select count(*) as c from sqlite_master where type ='table' and name ='user' ";
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToNext()) {
+            count = cursor.getInt(0);
+            if (count > 0) {
+                notable = false;
+            }
+        }
+        if (notable) {//不存在则创建
+            String sql1 = "create table user (uname text primary key,spoint integer)";
+
+            db.execSQL(sql1);
+            initUser();
+
+        }
     }
+
+    public void initUser()
+    {
+        Wish[] w = getWish(1);
+        Habit[] h = getHabit("任意时间",0);
+        int point=50;
+        for(int i=0;i<h.length;i++)
+        {
+            point+=h[i].getsPoint();
+        }
+        for(int i=0;i<w.length;i++)
+        {
+            point-=w[i].spoint;
+        }
+        String sql = "insert into user values('admin'," +point+ ")";
+        db.execSQL(sql);
+    }
+    public void UpdateUser()
+    {
+        Wish[] w = getWish(1);
+        Habit[] h = getHabit("任意时间",0);
+        int point=0;
+        for(int i=0;i<h.length;i++)
+        {
+            point+=h[i].getsPoint();
+        }
+        for(int i=0;i<w.length;i++)
+        {
+            point-=w[i].spoint;
+        }
+        String sql = "update user set spoint=" + point + " where uname = 'admin'";
+        db.execSQL(sql);
+    }
+
     public void insertTestWishRecord()
     {
         String sql9 = "insert into wishes values ('测试心愿1','wish',0,'20230604','七月前完成10公里打卡',25)";
@@ -96,10 +158,10 @@ public class DBManager {
     public void insertTestRecord() {
 
 
-        String sql1 = "insert into habits values ('测试习惯1','habit_1',2,0,'晨间习惯','每天','只有千锤百炼，才能成为好钢。',5,0,3,'20230604',1)";
-        String sql2 = "insert into habits values ('测试习惯2','habit_2',3,0,'午间习惯','每天','只有千锤百炼，才能成为好钢。',3,0,2,'20230604',1)";
-        String sql3 = "insert into habits values ('测试习惯3','habit_3',1,0,'晚间习惯','每天','只有千锤百炼，才能成为好钢。',4,0,2,'20230604',1)";
-        String sql4 = "insert into habits values ('测试习惯4','habit_4',1,0,'任意时间','每天','只有千锤百炼，才能成为好钢。',6,0,3,'20230604',1)";
+        String sql1 = "insert into habits values ('测试习惯1','habit_1',2,0,'晨间习惯','每天','只有千锤百炼，才能成为好钢。',5,0,3,'20230604',1,20)";
+        String sql2 = "insert into habits values ('测试习惯2','habit_2',3,0,'午间习惯','每天','只有千锤百炼，才能成为好钢。',3,0,2,'20230604',1,30)";
+        String sql3 = "insert into habits values ('测试习惯3','habit_3',1,0,'晚间习惯','每天','只有千锤百炼，才能成为好钢。',4,0,2,'20230604',1,25)";
+        String sql4 = "insert into habits values ('测试习惯4','habit_4',1,0,'任意时间','每天','只有千锤百炼，才能成为好钢。',6,0,3,'20230604',1,45)";
 
         String sql5 = "insert into daka values ('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604')";
         String sql6 = "insert into daka values ('测试习惯2','20230604'),('测试习惯2','20230604'),('测试习惯2','20230604')";
@@ -136,8 +198,28 @@ public class DBManager {
         db.execSQL(sql1);
         db.execSQL(sql2);
     }
-    public void wishUpdateDB(String w)
+    public int getUserPoint()
     {
+        String usql = "select * from user";
+        Cursor cursor = db.rawQuery(usql, null);
+        cursor.moveToNext();
+        int spoint = cursor.getInt(1);
+        return spoint;
+    }
+    public boolean wishUpdateDB(String w)
+    {
+        UpdateUser();
+        int spoint = getUserPoint();
+
+        String wsql = "select * from wishes where wname = '" + w + "'";
+        Cursor cursor = db.rawQuery(wsql, null);
+        cursor.moveToNext();
+
+        int wpoint = cursor.getInt(5);
+        if(spoint<wpoint)
+        {
+            return false;
+        }
         String sql = "update wishes set is_finish=1 where wname='"+w+"'";
         String sql2 = "update wishes set pic='wish_finish' where wname='"+w+"'";
         db.execSQL(sql);
@@ -146,6 +228,7 @@ public class DBManager {
         String sql1 = "update wishes set time='"+date_s+"' where wname='"+w+"'";
         db.execSQL(sql1);
         db.execSQL(sql2);
+        return true;
     }
     public int countotalwish(){
         Log.e("DB","IntoGetWish");
@@ -203,7 +286,7 @@ public class DBManager {
             c.moveToFirst();
             int i = 0;
             while (!c.isAfterLast()) {
-                Habit h1 = new Habit(c.getString(0), c.getString(1), c.getInt(2), c.getInt(3), c.getString(4), c.getString(5), c.getString(6), c.getInt(7), c.getInt(8), c.getInt(9), c.getString(10), c.getInt(11));
+                Habit h1 = new Habit(c.getString(0), c.getString(1), c.getInt(2), c.getInt(3), c.getString(4), c.getString(5), c.getString(6), c.getInt(7), c.getInt(8), c.getInt(9), c.getString(10), c.getInt(11),c.getInt(12));
                 h[i++] = h1;
                 c.moveToNext();
             }
@@ -220,7 +303,7 @@ public class DBManager {
             c.moveToFirst();
             int i = 0;
             while (!c.isAfterLast()) {
-                Habit h1 = new Habit(c.getString(0), c.getString(1), c.getInt(2), c.getInt(3), c.getString(4), c.getString(5), c.getString(6), c.getInt(7), c.getInt(8), c.getInt(9), c.getString(10), c.getInt(11));
+                Habit h1 = new Habit(c.getString(0), c.getString(1), c.getInt(2), c.getInt(3), c.getString(4), c.getString(5), c.getString(6), c.getInt(7), c.getInt(8), c.getInt(9), c.getString(10), c.getInt(11),c.getInt(12));
                 h[i++] = h1;
                 c.moveToNext();
             }
@@ -246,7 +329,18 @@ public class DBManager {
         db.execSQL(sql2);
         return true;    ///添加则返回true
     }
-
+    public boolean insertWishDB(Wish wish)
+    {
+        String sql1 = "select count(*) from wishes where wname = '" + wish.wname + "'";    //sql语句查询是否存在该名字
+        Cursor cursor = db.rawQuery(sql1, null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        if (count == 1)      //若已经存在这个名字的习惯则直接返回false
+            return false;
+        String sql2 = "insert into wishes values ('" + wish.wname + "','" + wish.pic + "'," + wish.is_finish + ",'" +wish.time + "','" + wish.wtext + "'," + wish.spoint  + ")";
+        db.execSQL(sql2);
+        return true;    ///添加则返回true
+    }
     public void switchHabit(String hname,int swit) {
         String sql = "update habits set swit = "+swit+" where hname='" + hname + "'";
         db.execSQL(sql);

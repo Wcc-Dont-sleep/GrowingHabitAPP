@@ -216,18 +216,24 @@ public class AddHabit extends AppCompatActivity {
         //获取输入框
         EditText etName = (EditText) findViewById(R.id.editText);
         EditText etNum = (EditText) findViewById(R.id.editText2);
+        EditText etPNum = (EditText) findViewById(R.id.editText4);
 //        EditText etHour = (EditText) findViewById(R.id.editText3);
 //        EditText etMin = (EditText) findViewById(R.id.editText4);
         EditText etText = (EditText) findViewById(R.id.editText5);
         //获取输入值
         String name = etName.getText().toString();
         String strNum = etNum.getText().toString();
+        String pNum = etPNum.getText().toString();
 //        String strHour = etHour.getText().toString();
 //        String strMin = etMin.getText().toString();
         String htext = etText.getText().toString();
 
-        int num, hour, min;
-
+        int num, hour, min,pnum;
+        if (pNum.equals(""))
+        {
+            Toast.makeText(this, "习惯点数不得为空", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if (name.equals("")) {
             Toast.makeText(this, "习惯名不能为空", Toast.LENGTH_SHORT).show();
             return;
@@ -237,12 +243,13 @@ public class AddHabit extends AppCompatActivity {
             return;
         }
         num = Integer.parseInt(strNum);
+        pnum = Integer.parseInt(pNum);
         if (htext.equals("")) {
             htext = "只有千锤百炼，才能成为好钢。";
         }
         if (strHour.equals("") && strMin.equals("")) {
             Date date = new Date();
-            Habit habit = new Habit(name, img, num, 0, time, frequency, htext, 0, 0, 0, Utils.date2String(date), 1);
+            Habit habit = new Habit(name, img, num, 0, time, frequency, htext, 0, 0, 0, Utils.date2String(date), 1,pnum);
             if (mgr.insertHabitDB(habit)) {
                 finish();
                 return;
@@ -256,7 +263,7 @@ public class AddHabit extends AppCompatActivity {
             min = Integer.parseInt(strMin);
             if (hour < 24 && hour >= 0 && min >= 0 && min < 60) {
                 Date date = new Date();
-                Habit habit = new Habit(name, img, num, 0, time, frequency, htext, 0, 0, 0, Utils.date2String(date), 1);
+                Habit habit = new Habit(name, img, num, 0, time, frequency, htext, 0, 0, 0, Utils.date2String(date), 1,pnum);
                 if (mgr.insertHabitDB(habit)) {
                     set_date_notice(name, htext, hour, min);
                     finish();
