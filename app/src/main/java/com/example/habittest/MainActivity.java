@@ -102,6 +102,14 @@ public class MainActivity extends AppCompatActivity {
                     top_button.setVisibility(View.GONE);
                     transaction.commit();
                     return true;
+                case R.id.navigation_note:
+                    Fragment6 frag6 = new Fragment6();
+                    frag6.setDBManager(mgr);
+                    transaction.replace(R.id.content, frag6);
+                    top_text.setText(R.string.top_note);
+                    top_button.setVisibility(View.GONE);
+                    transaction.commit();
+                    return true;
             }
             return false;
         }

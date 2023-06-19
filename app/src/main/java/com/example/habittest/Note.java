@@ -13,12 +13,15 @@ public class Note {
 
     public String ntitle;
 
-    public Note(String h,String p,String text,String t,String title){
+
+
+    public Note(String title,String p,String text,String t,String h){
         hname = h;
         pic = p;
         ntext = text;
         time = t;
         ntitle = title;
+
     }
 
     public String getHname() { return this.hname; }
@@ -40,4 +43,6 @@ public class Note {
     public String getNtitle() { return this.ntitle; }
 
     public void setNtitle(String title) { this.ntitle = title; }
+
+
 }
