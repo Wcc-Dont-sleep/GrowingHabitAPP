@@ -87,6 +87,26 @@ public class DBManager {
             db.execSQL(sql1);
             this.insertTestWishRecord();
 
+
+        }
+        notable = true;
+        count = -1;
+        //创建便签表格
+        sql = "select count(*) as c from sqlite_master where type ='table' and name ='notes' ";
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToNext()) {
+            count = cursor.getInt(0);
+            if (count > 0) {
+                notable = false;
+            }
+        }
+        if (notable) {//不存在则创建
+            String sql1 = "create table notes (ntitle text primary key,pic text, ntext text,time text, hname text)";
+
+            db.execSQL(sql1);
+            this.insertTestNoteRecord();
+
+
         }
 
         //创建用户信息
@@ -182,6 +202,20 @@ public class DBManager {
         db.execSQL(sql3);
 
     }
+    public void insertTestNoteRecord()
+    {
+        String sql14 = "insert into notes values ('测试便签1','note','测试便签1的内容','20230610','测试便签1')";
+        String sql15 = "insert into notes values ('测试便签2','note','测试便签2的内容','20230610','测试便签2')";
+        String sql16 = "insert into notes values ('测试便签3','note','测试便签3的内容','20230610','测试便签3')";
+        String sql17 = "insert into notes values ('测试便签4','note','测试便签4的内容','20230610','测试便签4')";
+        String sql18 = "insert into notes values ('测试便签5','note','测试便签5的内容','20230610','测试便签5')";
+        db.execSQL(sql14);
+        db.execSQL(sql15);
+        db.execSQL(sql16);
+        db.execSQL(sql17);
+        db.execSQL(sql18);
+    }
+
     public void insertTestRecord() {
 
 
@@ -257,6 +291,7 @@ public class DBManager {
         db.execSQL(sql2);
         return true;
     }
+<<<<<<< HEAD
     public void updatedatelog(String time){
         String sql = "update Datalogs set finish_num=+1 where currentdate='"+time+"'";
         db.execSQL(sql);
@@ -268,6 +303,13 @@ public class DBManager {
         int count = cursor.getInt(0);//获取心愿总数'
         return count;
     }
+=======
+    public void noteUpdateDB(String n)
+    {
+        String sql = "update notes set time='' where ntitle='"+n+"'";
+        db.execSQL(sql);
+    }
+>>>>>>> 64442bba70614c9c72aa25fa58f1b443b8d316f4
     public int countotalwish(){
         Log.e("DB","IntoGetWish");
         String sql = "select count(*) from wishes where is_finish="+1;
@@ -276,7 +318,14 @@ public class DBManager {
         int count = cursor.getInt(0);//获取心愿总数'
         return count;
     }
-
+    public int countotalnote(){
+        Log.e("DB","IntoGetNote");
+        String sql = "select count(*) from notes";
+        Cursor cursor = db.rawQuery(sql,null);
+        cursor.moveToNext();
+        int count = cursor.getInt(0);//获取全部便签总数
+        return count;
+    }
     public int countotalhabit(){
         String sql = "select sum(finished_num) from habits";
         Cursor cursor = db.rawQuery(sql, null);
@@ -308,7 +357,27 @@ public class DBManager {
         ///应当有count == h.length;
         return w;
     }
+    public Note[] getNote() {
+        Log.e("DB", "IntoGetNote");
+        String sql = "select count(*) from notes where time!=''";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        int count = cursor.getInt(0);//获取便签总数
 
+        Log.i("tag", Integer.toString(count));
+
+        Note[] n = new Note[count];
+        String sql2 = "select * from notes where time!=''";
+        Cursor c = db.rawQuery(sql2, null);
+        c.moveToFirst();
+        int i = 0;
+        while (!c.isAfterLast()) {
+            Note n1 = new Note(c.getString(0),c.getString(1),c.getString(2),c.getString(3),c.getString(4));
+            n[i++] = n1;
+            c.moveToNext();
+        }
+        return n;
+    }
     //返回给定时间段下的习惯
     //isNotFinished为1时返回未结束的,为0返回已结束的
     public Habit[] getHabit(String time, int isNotFinished) {
