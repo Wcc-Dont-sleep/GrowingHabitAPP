@@ -61,6 +61,7 @@ public class Fragment2 extends Fragment {
         });
 
         refresh_list();
+
         return view;
     }
 
@@ -68,7 +69,7 @@ public class Fragment2 extends Fragment {
         list = new ArrayList<HabitListItem>();
         habit = mgr.getHabit("任意时间", 1);
         for (int i = 0; i < habit.length; i++) {
-            HabitListItem t = new HabitListItem(habit[i].hname, habit[i].htext, habit[i].days + "", habit[i].pic);
+            HabitListItem t = new HabitListItem(habit[i].hname, habit[i].htext, habit[i].days + "", habit[i].pic,habit[i].sPoint+"");
             list.add(t);
         }
         itemAdapter = new HabitListItemAdapter(getActivity(), R.layout.habit_list_item, list);

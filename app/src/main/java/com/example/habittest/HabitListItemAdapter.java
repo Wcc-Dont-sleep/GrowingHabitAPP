@@ -30,10 +30,12 @@ public class HabitListItemAdapter extends ArrayAdapter<HabitListItem> {
         TextView textName = (TextView) view.findViewById(R.id.text_name);
         TextView textTime = (TextView) view.findViewById(R.id.text_time);
         TextView textDays = (TextView) view.findViewById(R.id.text_days);
+        TextView textPoint = (TextView) view.findViewById(R.id.textView_wishpoint);
         imageView.setImageResource(getContext().getResources().getIdentifier(item.getPicPath(),"drawable",getContext().getApplicationInfo().packageName));
         textName.setText(item.getName());
         textTime.setText(item.getTime());
-        textDays.setText(item.getDays());
+        textDays.setText(item.getDays()+"天");
+        textPoint.setText(item.getsPoint()+'点');
         return view;
     }
 }

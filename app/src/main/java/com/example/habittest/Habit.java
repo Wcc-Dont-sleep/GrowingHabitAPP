@@ -12,14 +12,16 @@ public class Habit {
     public int curdays; //当前已坚持天数
     public int highdays;    //最高坚持天数
     public String credate;  //创建日期
-    public int swit;    //习惯是否开启
+    public int swit;//习惯是否开启
 
+    public int sPoint;
 
-    public Habit(String h, String p, int t, int f, String time, String fre, String htext, int d, int c, int high, String cre, int swit) {
+    public Habit(String h, String p, int t, int f, String time, String fre, String htext, int d, int c, int high, String cre, int swit,int spoint) {
         setHname(h);
         setPic(p);
         setTotal_num(t);
         setFinished_num(f);
+        setsPoint(spoint);
 
         setTime(time);
         setFre(fre);
@@ -72,7 +74,8 @@ public class Habit {
     public void setHname(String hname) {
         this.hname = hname;
     }
-
+    public int getsPoint(){return sPoint;}
+    public void setsPoint(int p){this.sPoint = p;};
     public String getPic() {
         return pic;
     }

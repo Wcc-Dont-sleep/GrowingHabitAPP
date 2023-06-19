@@ -69,7 +69,7 @@ public class OverHabit extends AppCompatActivity {
         list = new ArrayList<HabitListItem>();
         habit = mgr.getHabit("任意时间", 0);
         for (int i = 0; i < habit.length; i++) {
-            HabitListItem t = new HabitListItem(habit[i].hname, habit[i].htext, habit[i].days + "", habit[i].pic);
+            HabitListItem t = new HabitListItem(habit[i].hname, habit[i].htext, habit[i].days + "", habit[i].pic,habit[i].sPoint+"");
             list.add(t);
         }
         itemAdapter = new HabitListItemAdapter(this, R.layout.habit_list_item, list);

@@ -6,11 +6,11 @@ public class HabitListItem {
     private String time;
     private String days;
     private String picPath;
-
+    private String sPoint;
     public String getName() {
         return name;
     }
-
+    public String getsPoint(){return sPoint;}
     public String getTime() {
         return time;
     }
@@ -30,7 +30,7 @@ public class HabitListItem {
     public void setTime(String time) {
         this.time = time;
     }
-
+    public void setsPoint(String p){this.sPoint = p;}
     public void setDays(String days) {
         this.days = days;
     }
@@ -40,11 +40,12 @@ public class HabitListItem {
     }
 
 
-    public HabitListItem(String name, String time, String days, String picPath) {
+    public HabitListItem(String name, String time, String days, String picPath,String p) {
         this.name = name;
         this.time = time;
         this.days = days;
         this.picPath = picPath;
+        this.sPoint = p;
     }
 
 

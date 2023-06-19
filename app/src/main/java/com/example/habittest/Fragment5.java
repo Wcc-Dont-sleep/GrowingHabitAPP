@@ -46,6 +46,9 @@ public class Fragment5 extends Fragment{
         TextView totalWishTextView = v.findViewById(R.id.totalwish);
         totalWishTextView.setText(String.valueOf(mgr.countotalwish()));
 
+        TextView totalPointTextView = v.findViewById(R.id.totalpoint);
+        totalPointTextView.setText(String.valueOf(mgr.getUserPoint()));
+
         CalendarView calendarView = v.findViewById(R.id.personalCal);
     // 获取 Calendar 对象并设置标记
         Calendar calendar = Calendar.getInstance();
