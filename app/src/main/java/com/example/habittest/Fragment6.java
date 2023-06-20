@@ -28,6 +28,8 @@ public class Fragment6 extends Fragment{
 
     Note[] note;
     private View v;
+
+    private Button addbutton;
     private GridView gview;
     private List<Map<String, Object>> data_list;
     private SimpleAdapter sim_adapter;
@@ -84,24 +86,7 @@ public class Fragment6 extends Fragment{
         gview.setAdapter(noteAdapter);
 
     }
-/*
-    private void change_data(int item_id){
-        if(wish[item_id].is_finish==0)
-        {
-            wish[item_id].is_finish=1;
-            wish[item_id].pic="wish_finish";
-            refresh_grid();
-            Toast.makeText(getActivity(),wish[item_id].wname +"心愿完成", Toast.LENGTH_SHORT).show();
 
-            mgr.clockinUpdateDB(wish[item_id].wname);
-        }
-        else {
-            Toast.makeText(getActivity(),wish[item_id].wname + "已经完成，请勿重复点击", Toast.LENGTH_SHORT).show();
-        }
-
-    }
-
- */
     public class NoteAdapter extends BaseAdapter {
         private List<Map<String, Object>> data;
         private Context context;
@@ -152,6 +137,7 @@ public class Fragment6 extends Fragment{
                 @Override
                 public void onClick(View v) {
                     //holder.button.setVisibility(View.GONE);
+
                     note = mgr.getNote();
                     //Toast.makeText(context, " Button Clicked: position " + buttonPosition, Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(getActivity(),EditNote.class);
@@ -161,6 +147,8 @@ public class Fragment6 extends Fragment{
                     startActivity(intent);
                 }
             });
+
+
             return convertView;
         }
 

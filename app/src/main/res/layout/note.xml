@@ -10,5 +10,21 @@
         android:layout_width="409dp"
         android:layout_height="729dp"
         tools:layout_editor_absoluteX="1dp"
-        tools:layout_editor_absoluteY="1dp" />
+        tools:layout_editor_absoluteY="1dp" >
+
+
+    </GridView>
+
+    <!--<Button
+        android:id="@+id/add_note"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="添加便签"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:backgroundTint="@color/bg_color"
+        tools:layout_editor_absoluteX="300dp"
+        tools:layout_editor_absoluteY="600dp"
+        tools:ignore="MissingConstraints"/>-->
 </android.support.constraint.ConstraintLayout>

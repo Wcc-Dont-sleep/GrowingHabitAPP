@@ -12,5 +12,6 @@
     <string name="add_wish">添加心愿</string>
     <string name="guanwei">官方微博（开发者主页）</string>
     <string name="check_note">查看便签</string>
+    <string name="add_note">添加便签</string>
     <string name="qq">开发者QQ（982728182）</string>
 </resources>

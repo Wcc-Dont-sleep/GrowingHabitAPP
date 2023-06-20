@@ -32,6 +32,7 @@
         <activity android:name=".TodayCard" />
         <activity android:name=".AboutUs" />
         <activity android:name=".HelpLayout"/>
+        <activity android:name="AddNote"/>
         <activity android:name=".EditNote"/>
         <activity android:name=".OverHabit"></activity>
         <provider

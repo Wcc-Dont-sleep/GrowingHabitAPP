@@ -35,17 +35,6 @@
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="3dp" />
 
-        <Button
-            android:id="@+id/delete_button"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="end"
-            android:background="@mipmap/ic_delete"
-            android:onClick="deleteNote"
-            android:textColor="@color/colorwhite"
-            android:textSize="20sp"
-            tools:layout_editor_absoluteX="280dp"
-            tools:layout_editor_absoluteY="8dp" />
 
     </android.support.v7.widget.Toolbar>
 

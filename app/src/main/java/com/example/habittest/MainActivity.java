@@ -49,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar top_tools;
     private Button top_button;
     private Button top_wish_button;
+    private Button top_note_button;
     private FrameLayout frameLayout;
     //用于展示listview
     private List<HabitListItem> list = new ArrayList<HabitListItem>();
@@ -74,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     top_wish_button.setVisibility(View.GONE);
+                    top_note_button.setVisibility(View.GONE);
                     Fragment1 frag1 = new Fragment1();
                     frag1.setDBManager(mgr);
                     transaction.replace(R.id.content, frag1);
@@ -88,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
                     top_text.setText(R.string.top_all);
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.GONE);
+                    top_note_button.setVisibility(View.GONE);
                     transaction.commit();
                     return true;
                 case R.id.navigation_notifications:
@@ -97,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
                     top_text.setText("我的");
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.GONE);
+                    top_note_button.setVisibility(View.GONE);
                     transaction.commit();
                     return true;
                 case R.id.navigation_wish:
@@ -106,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
                     top_text.setText(R.string.top_wish);
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.VISIBLE);
+                    top_note_button.setVisibility(View.GONE);
                     transaction.commit();
                     return true;
                 case R.id.navigation_note:
@@ -114,6 +119,8 @@ public class MainActivity extends AppCompatActivity {
                     transaction.replace(R.id.content, frag6);
                     top_text.setText(R.string.top_note);
                     top_button.setVisibility(View.GONE);
+                    top_wish_button.setVisibility(View.GONE);
+                    top_note_button.setVisibility(View.VISIBLE);
                     transaction.commit();
                     return true;
             }
@@ -190,6 +197,7 @@ public class MainActivity extends AppCompatActivity {
         top_text = (TextView) findViewById(R.id.top_text);
         top_button = (Button) findViewById(R.id.top_button);
         top_wish_button = (Button) findViewById(R.id.top_button_wish);
+        top_note_button = (Button) findViewById(R.id.top_button_note);
         top_wish_button.setVisibility(View.GONE);
     }
 
@@ -210,6 +218,11 @@ public class MainActivity extends AppCompatActivity {
     public void addWish(View v)
     {
         Intent intent = new Intent(MainActivity.this, AddWish.class);
+        startActivity(intent);
+    }
+    public void addNote(View v)
+    {
+        Intent intent = new Intent(MainActivity.this,AddNote.class);
         startActivity(intent);
     }
 }

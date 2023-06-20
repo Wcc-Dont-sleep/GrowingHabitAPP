@@ -414,6 +414,27 @@ public class DBManager {
         db.execSQL(sql2);
         return true;    ///添加则返回true
     }
+
+    public boolean insertNoteDB(Note note)
+    {
+        String sql1 = "select count(*) from notes where ntitle = '" + note.ntitle +"'";
+        Cursor cursor = db.rawQuery(sql1,null);
+        cursor.moveToFirst();
+        int count = cursor.getInt(0);
+        if(count ==1)
+            return false;
+        String sql = "select count(*) from habits where hname = '" + note.hname + "'";
+        Cursor cursor1 = db.rawQuery(sql, null);
+        cursor1.moveToFirst();
+        int count1 = cursor.getInt(0);
+        if (count1 == 0)      //若没有这个习惯则创建失败
+            return false;
+        String sql2 = "insert into notes values ('"+note.ntitle+"','"+note.pic+"','"+note.ntext+"','"+note.time+"','"+note.hname+"')";
+        db.execSQL(sql2);
+        return true;
+    }
+
+
     public void switchHabit(String hname,int swit) {
         String sql = "update habits set swit = "+swit+" where hname='" + hname + "'";
         db.execSQL(sql);

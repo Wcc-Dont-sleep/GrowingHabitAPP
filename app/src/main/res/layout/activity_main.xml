@@ -76,6 +76,17 @@
             android:textColor="@color/colorwhite"
             tools:layout_editor_absoluteX="280dp"
             tools:layout_editor_absoluteY="8dp" />
+        <Button
+            android:id="@+id/top_button_note"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:background="@drawable/plus"
+            android:foreground="@color/colorpure"
+            android:onClick="addNote"
+            android:textColor="@color/colorwhite"
+            tools:layout_editor_absoluteX="220dp"
+            tools:layout_editor_absoluteY="8dp" />
     </android.support.v7.widget.Toolbar>
 
 
