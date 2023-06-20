@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
 import java.util.Date;
+import java.util.List;
 
 public class DBManager {
     private static MySqliteHelper helper;
@@ -133,8 +134,34 @@ public class DBManager {
             initUser();
 
         }
-    }
 
+        notable=true;
+        count = -1;
+//创建sss
+        sql = "select count(*) as c from sqlite_master where type ='table' and name ='Datelogs' ";
+        cursor = db.rawQuery(sql, null);
+        if (cursor.moveToNext()) {
+            count = cursor.getInt(0);
+            if (count > 0) {
+                notable = false;
+            }
+        }
+        if(notable){
+            String sql1="create table Datelogs (currentdate text primary key,finish_num integer)";
+            db.execSQL(sql1);
+            this.insertDateLogRecord();
+        }
+    }
+    public void insertDateLogRecord(){
+        List<String> dateList = DateUtils.getDateRange("2023-06-01", "2023-06-30");
+// 遍历打印日期列表
+//        String sqldate="insert into Datelogs values ('2023-07-01',4)";
+//        db.execSQL(sqldate);
+        for (String date:dateList) {
+            String sql="INSERT OR IGNORE into Datelogs values ('" + date + "',0)";
+            db.execSQL(sql);
+        }
+    }
     public void initUser()
     {
         Wish[] w = getWish(1);
@@ -270,6 +297,17 @@ public class DBManager {
         db.execSQL(sql1);
         db.execSQL(sql2);
         return true;
+    }
+    public void updatedatelog(String time){
+        String sql = "update Datalogs set finish_num=+1 where currentdate='"+time+"'";
+        db.execSQL(sql);
+    }
+    public int getdatelog(String time){
+        String sql = "select finish_num from Datelogs where currentdate='"+time+"'";
+        Cursor cursor = db.rawQuery(sql, null);
+        cursor.moveToNext();
+        int count = cursor.getInt(0);//获取心愿总数'
+        return count;
     }
     public void noteUpdateDB(String n)
     {

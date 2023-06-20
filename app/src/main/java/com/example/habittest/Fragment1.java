@@ -154,6 +154,7 @@ public class Fragment1 extends Fragment {
 
             //更新数据库
             mgr.clockinUpdateDB(habit[item_id].hname);
+
         } else {
             Toast.makeText(getActivity(), habit[item_id].hname + "已完成", Toast.LENGTH_SHORT).show();
         }
