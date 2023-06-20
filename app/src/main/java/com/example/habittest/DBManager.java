@@ -48,7 +48,14 @@ public class DBManager {
         db.execSQL(sql13);
         db.execSQL(sql14);
         db.execSQL(sql15);
-
+/*
+        String sql16 = "update notes set pic='note' where ntitle='测试便签1'";
+        String sql17 = "update notes set time='' where ntitle='测试便签1'";
+        String sql18 = "update notes set hname='跑' where ntitle='测试便签1'";
+        db.execSQL(sql16);
+        db.execSQL(sql17);
+        db.execSQL(sql18);
+*/
         boolean notable = true;
         int count = -1;
         //先判断表是否存在
@@ -291,7 +298,6 @@ public class DBManager {
         db.execSQL(sql2);
         return true;
     }
-<<<<<<< HEAD
     public void updatedatelog(String time){
         String sql = "update Datalogs set finish_num=+1 where currentdate='"+time+"'";
         db.execSQL(sql);
@@ -303,13 +309,11 @@ public class DBManager {
         int count = cursor.getInt(0);//获取心愿总数'
         return count;
     }
-=======
     public void noteUpdateDB(String n)
     {
         String sql = "update notes set time='' where ntitle='"+n+"'";
         db.execSQL(sql);
     }
->>>>>>> 64442bba70614c9c72aa25fa58f1b443b8d316f4
     public int countotalwish(){
         Log.e("DB","IntoGetWish");
         String sql = "select count(*) from wishes where is_finish="+1;
