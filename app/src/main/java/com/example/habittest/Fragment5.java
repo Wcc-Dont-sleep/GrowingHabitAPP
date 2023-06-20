@@ -110,9 +110,10 @@ public class Fragment5 extends Fragment{
             Date threeDaysAgo = calendar1.getTime();
             String threeDaysAgoString = dateFormat.format(threeDaysAgo);
             xVals.add(threeDaysAgoString);
-            yVals.add(new BarEntry((float) DateUtils.getpredict(fittedFunction,4),count));
+            yVals.add(new BarEntry((float) DateUtils.getpredict(fittedFunction,3.3),count));
             count++;
         }
+
         int linecount=0;
         //曲线图
         int totaldays=6;

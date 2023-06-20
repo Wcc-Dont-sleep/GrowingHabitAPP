@@ -29,6 +29,7 @@ public class DBManager {
         String dsql = "drop table daka";
         String dsql2 = "drop table habits";
         String dsql3 = "drop table user";
+        String dsql4 = "drop table Datelogs";
 
         String sql10 = "update wishes set is_finish=0 where wname='测试心愿1'";
         String sql11 = "update wishes set pic='wish' where wname='测试心愿1'";
@@ -38,9 +39,10 @@ public class DBManager {
         String sql14 = "update wishes set pic='wish' where wname='测试心愿2'";
         String sql15 = "update wishes set time='' where wname='测试心愿2'";
 
-        //db.execSQL(dsql);
-        //db.execSQL(dsql2);
-        //db.execSQL(dsql3);
+        db.execSQL(dsql);
+        db.execSQL(dsql2);
+        db.execSQL(dsql3);
+        db.execSQL(dsql4);
 
         db.execSQL(sql10);
         db.execSQL(sql11);
@@ -153,7 +155,7 @@ public class DBManager {
         }
     }
     public void insertDateLogRecord(){
-        List<String> dateList = DateUtils.getDateRange("2023-06-01", "2023-06-30");
+        List<String> dateList = DateUtils.getDateRange("2023-06-01", "2023-07-30");
 // 遍历打印日期列表
 //        String sqldate="insert into Datelogs values ('2023-07-01',4)";
 //        db.execSQL(sqldate);
@@ -299,7 +301,7 @@ public class DBManager {
         return true;
     }
     public void updatedatelog(String time){
-        String sql = "update Datalogs set finish_num=+1 where currentdate='"+time+"'";
+        String sql = "update Datelogs set finish_num=finish_num+1 where currentdate='"+time+"'";
         db.execSQL(sql);
     }
     public int getdatelog(String time){

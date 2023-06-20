@@ -16,7 +16,9 @@ import android.widget.SimpleAdapter;
 import android.widget.Toast;
 import android.widget.Toolbar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -154,6 +156,13 @@ public class Fragment1 extends Fragment {
 
             //更新数据库
             mgr.clockinUpdateDB(habit[item_id].hname);
+            //更新每日打卡
+            Calendar calendar = Calendar.getInstance();
+            Date today = calendar.getTime();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            String todayString = dateFormat.format(today);
+            Log.d("fragment1",todayString);
+            mgr.updatedatelog(todayString);
 
         } else {
             Toast.makeText(getActivity(), habit[item_id].hname + "已完成", Toast.LENGTH_SHORT).show();
