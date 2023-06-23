@@ -3,6 +3,7 @@ package com.example.habittest;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -30,7 +31,6 @@ public class Fragment1 extends Fragment {
     private GridView gview;
     private List<Map<String, Object>> data_list;
     private SimpleAdapter sim_adapter;
-
     //选择时间button
     private Button[] bt = new Button[4];
     //当前选择的时间段
@@ -60,6 +60,7 @@ public class Fragment1 extends Fragment {
         bt[1] = (Button) v.findViewById(R.id.morning);
         bt[2] = (Button) v.findViewById(R.id.noon);
         bt[3] = (Button) v.findViewById(R.id.evening);
+        // 在这里更新 TextView 的显示内容
 
         //设置默认选择任意时间
         selectTime(0);

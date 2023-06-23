@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -28,6 +29,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.LineChart;
+
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -43,7 +46,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     List<String> mPermissionList = new ArrayList<>();//权限集合
     String[] permissions = new String[]{Manifest.permission.READ_CALENDAR, Manifest.permission.WRITE_CALENDAR, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-    private TextView mTextMessage, top_text;
+    private TextView mTextMessage, top_text,spointview;
     private FragmentTransaction transaction;
     private FragmentManager fragmentManager;
     private Toolbar top_tools;
@@ -64,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     //今日图片
     private byte[] image;
 
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -80,6 +84,7 @@ public class MainActivity extends AppCompatActivity {
                     frag1.setDBManager(mgr);
                     transaction.replace(R.id.content, frag1);
                     top_text.setText(R.string.top_today);
+                    spointview.setText(String.valueOf(mgr.getUserPoint()));
                     top_button.setVisibility(View.VISIBLE);
                     transaction.commit();
                     return true;
@@ -88,6 +93,7 @@ public class MainActivity extends AppCompatActivity {
                     frag2.setDBManager(mgr);
                     transaction.replace(R.id.content, frag2);
                     top_text.setText(R.string.top_all);
+                    spointview.setText(String.valueOf(mgr.getUserPoint()));
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.GONE);
                     top_note_button.setVisibility(View.GONE);
@@ -98,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                     frag5.setDBManager(mgr);
                     transaction.replace(R.id.content, frag5);
                     top_text.setText("我的");
+                    spointview.setText(String.valueOf(mgr.getUserPoint()));
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.GONE);
                     top_note_button.setVisibility(View.GONE);
@@ -108,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     frag4.setDBManager(mgr);
                     transaction.replace(R.id.content, frag4);
                     top_text.setText(R.string.top_wish);
+                    spointview.setText(String.valueOf(mgr.getUserPoint()));
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.VISIBLE);
                     top_note_button.setVisibility(View.GONE);
@@ -118,6 +126,7 @@ public class MainActivity extends AppCompatActivity {
                     frag6.setDBManager(mgr);
                     transaction.replace(R.id.content, frag6);
                     top_text.setText(R.string.top_note);
+                    spointview.setText(String.valueOf(mgr.getUserPoint()));
                     top_button.setVisibility(View.GONE);
                     top_wish_button.setVisibility(View.GONE);
                     top_note_button.setVisibility(View.VISIBLE);
@@ -132,6 +141,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         //关于申请权限的代码
         mPermissionList.clear();
+        // 在 Activity 或 Fragment 中定义一个 Handler 对象
+
+
+// 在需要更新 TextView 的地方，通过 Handler.post 方法更新 UI
+
 
         for (int i = 0; i < permissions.length; i++) {
             if (ContextCompat.checkSelfPermission(MainActivity.this, permissions[i]) != PackageManager.PERMISSION_GRANTED) {
@@ -191,6 +205,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setDefaultFragment();
         mTextMessage = (TextView) findViewById(R.id.message);
+        spointview=(TextView)findViewById(R.id.myspoint);
+        spointview.setText(String.valueOf(mgr.getUserPoint()));
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         top_tools = (Toolbar) findViewById(R.id.toolbar);

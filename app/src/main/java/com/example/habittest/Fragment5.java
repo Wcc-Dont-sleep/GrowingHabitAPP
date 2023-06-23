@@ -62,7 +62,7 @@ public class Fragment5 extends Fragment{
         totalHabitTextView.setText(String.valueOf(mgr.countotalhabit()));
         TextView totalWishTextView = v.findViewById(R.id.totalwish);
         totalWishTextView.setText(String.valueOf(mgr.countotalwish()));
-        totalWishTextView.setText(String.valueOf(mgr.getdatelog("2023-06-12")));
+        //totalWishTextView.setText(String.valueOf(mgr.getdatelog("2023-06-12")));
         TextView totalPointTextView = v.findViewById(R.id.totalpoint);
         totalPointTextView.setText(String.valueOf(mgr.getUserPoint()));
         BarChart barChart = v.findViewById(R.id.bc1);
@@ -133,6 +133,7 @@ public class Fragment5 extends Fragment{
         lineChart.setBackgroundColor(Color.WHITE);
 //是否显示边界
         lineChart.setDrawBorders(false);
+        lineChart.setDrawGridBackground(false);
 // 获取之前三天的日期
         //y轴数值集合
         BarDataSet set = new BarDataSet(yVals," ");
@@ -143,6 +144,7 @@ public class Fragment5 extends Fragment{
         //添加到控件中
         barChart.setData(data);
         barChart.setBackgroundColor(Color.WHITE);
+        barChart.setDrawGridBackground(false);
 //是否显示边界
         barChart.setDrawBorders(false);
 //        CalendarView calendarView = v.findViewById(R.id.personalCal);

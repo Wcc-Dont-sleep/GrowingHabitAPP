@@ -193,7 +193,7 @@ public class DBManager {
         {
             point-=w[i].spoint;
         }
-        String sql = "update user set spoint=" + point + " where uname = 'admin'";
+        String sql = "update user set spoint=spoint+" + point + " where uname = 'admin'";
         db.execSQL(sql);
     }
 
@@ -233,9 +233,9 @@ public class DBManager {
         String sql3 = "insert into habits values ('测试习惯3','habit_3',1,0,'晚间习惯','每天','只有千锤百炼，才能成为好钢。',4,0,2,'20230604',1,25)";
         String sql4 = "insert into habits values ('测试习惯4','habit_4',1,0,'任意时间','每天','只有千锤百炼，才能成为好钢。',6,0,3,'20230604',1,45)";
 
-        String sql5 = "insert into daka values ('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604'),('测试习惯1','20230604')";
-        String sql6 = "insert into daka values ('测试习惯2','20230604'),('测试习惯2','20230604'),('测试习惯2','20230604')";
-        String sql7 = "insert into daka values ('测试习惯3','20230604'),('测试习惯3','20230604'),('测试习惯3','20230604'),('测试习惯3','20230604')";
+        String sql5 = "insert into daka values ('测试习惯1','20230604'),('测试习惯1','20230605'),('测试习惯1','20230606'),('测试习惯1','20230607'),('测试习惯1','20230608')";
+        String sql6 = "insert into daka values ('测试习惯2','20230604'),('测试习惯2','20230605'),('测试习惯2','20230606')";
+        String sql7 = "insert into daka values ('测试习惯3','20230604'),('测试习惯3','20230605'),('测试习惯3','20230606'),('测试习惯3','20230607')";
         String sql8 = "insert into daka values ('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604'),('测试习惯4','20230604')";
 
 
@@ -265,8 +265,15 @@ public class DBManager {
         String date_s = Utils.date2String(date);
         String sql1 = "update habits set finished_num = finished_num+1 where hname ='" + h + "'";
         String sql2 = "insert into daka values ('" + h + "','" + date_s + "')";
+        String sqlget="select spoint from habits where hname='" + h + "'";
+        Cursor cursor = db.rawQuery(sqlget, null);
+        cursor.moveToNext();
+        int spoint = cursor.getInt(0);
+        Log.d("spoint",String.valueOf(spoint));
+        String sql23="update user set spoint=spoint+"+spoint;
         db.execSQL(sql1);
         db.execSQL(sql2);
+        db.execSQL(sql23);
     }
     public int getUserPoint()
     {
@@ -278,18 +285,20 @@ public class DBManager {
     }
     public boolean wishUpdateDB(String w)
     {
-        UpdateUser();
-        int spoint = getUserPoint();
 
         String wsql = "select * from wishes where wname = '" + w + "'";
         Cursor cursor = db.rawQuery(wsql, null);
         cursor.moveToNext();
-
         int wpoint = cursor.getInt(5);
-        if(spoint<wpoint)
-        {
+        String usql = "select spoint from user";
+        cursor = db.rawQuery(usql, null);
+        cursor.moveToNext();
+        int spoint = cursor.getInt(0);
+        if(wpoint>spoint){
             return false;
         }
+        usql = "update user set spoint=spoint-"+wpoint;
+        db.execSQL(usql);
         String sql = "update wishes set is_finish=1 where wname='"+w+"'";
         String sql2 = "update wishes set pic='wish_finish' where wname='"+w+"'";
         db.execSQL(sql);

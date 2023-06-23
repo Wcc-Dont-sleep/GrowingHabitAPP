@@ -171,7 +171,7 @@ public class Fragment4 extends Fragment{
                         wish[position].pic = "wish_finish";
                         if (mgr.wishUpdateDB(wish[position].wname))
                         {
-                            mgr.UpdateUser();
+
                             Toast.makeText(context,wish[position].wname +"心愿完成"+"消耗"+wish[position].spoint+"点数", Toast.LENGTH_SHORT).show();
                             refresh_grid();
                             //holder.button.setVisibility(View.GONE);

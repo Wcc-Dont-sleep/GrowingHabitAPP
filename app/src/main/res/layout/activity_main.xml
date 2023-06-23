@@ -55,6 +55,30 @@
             android:textColor="@color/colorwhite"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="3dp" />
+        <TextView
+            android:id="@+id/spointtext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text=" spoint:"
+            android:textSize="20sp"
+            android:textColor="@color/colorwhite"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="3dp" />
+        <TextView
+            android:id="@+id/myspoint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_gravity="center"
+            android:text=" 0"
+            android:textSize="20sp"
+            android:textColor="@color/colorwhite"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="3dp" />
         <Button
             android:id="@+id/top_button_wish"
             android:layout_width="25dp"
